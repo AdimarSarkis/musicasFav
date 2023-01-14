@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    @apply bg-gray-900 text-zinc-100;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* CMS = Content Management System
+
+Headless CMS (GraphCMS): Painel de ADMIN (dados via API REST ou GraphQL)
+*/
+
+/*
+ GraphQL possui dois metodos: 
+    query / mutation
+
+    query: buscar dados
+
+    mutation: modificar dados crud
+
+
+
+*/
