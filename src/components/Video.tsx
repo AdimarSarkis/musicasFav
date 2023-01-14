@@ -1,9 +1,9 @@
 import { Player, Youtube, DefaultUi } from "@vime/react";
 import {DiscordLogo, Lightning,CaretRight,FileArrowDown} from "phosphor-react";
-import { gql } from '@apollo/client';
+import { gql, useQuery } from "@apollo/client";
 
 import '@vime/core/themes/default.css';
-import { useQuery } from '@apollo/client';
+ 
 
 const GET_LESSON_BY_SLUG_QUERY = gql`
   query GetLessonBySlug ($slug: String) {
