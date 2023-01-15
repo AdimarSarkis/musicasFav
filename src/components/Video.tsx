@@ -5,42 +5,43 @@ import { gql, useQuery } from "@apollo/client";
 import '@vime/core/themes/default.css';
  
 
-const GET_LESSON_BY_SLUG_QUERY = gql`
-  query GetLessonBySlug ($slug: String) {
-    lesson(where: {slug: $slug}) {
+const GET_MUSIC_BY_SLUG_QUERY = gql`
+  query GetMusicBySlug ($slug: String) {
+    music(where: {slug: $slug}) {
       title
       videoId
       description
-      teacher {
+      artista {
         bio
-        avatarURL
         name
+        avatarUrl
       }
     }
   }
 `
 
-interface GerLessonBySlugResponse{
-  lesson: {
+interface GetMusicBySlugResponse{
+  music: {
+    description: string;
     title: string;
     videoId: string;
-    description: string;
-    teacher: {
+    artista: {
       bio: string;
-      avatarURL: string;
       name: string;
+      avatarUrl: string;
     }
   }
 }
 
 interface VideoProps{
-  lessonSlug: string;
+  musicSlug: string;
 }
 
+
 export function Video(props: VideoProps) {
-  const { data } = useQuery<GerLessonBySlugResponse>(GET_LESSON_BY_SLUG_QUERY, {
+  const { data } = useQuery<GetMusicBySlugResponse>(GET_MUSIC_BY_SLUG_QUERY, {
     variables: {
-      slug: props.lessonSlug,
+      slug: props.musicSlug,
     }
   });
 
@@ -58,7 +59,7 @@ export function Video(props: VideoProps) {
         <div className="h-full w-full max-w-[1100px] max-h-[60vh]
          aspect-video">
           <Player>
-            <Youtube videoId={data.lesson.videoId}/>
+            <Youtube videoId={data.music.videoId}/>
             <DefaultUi />
           </Player>
          </div>
@@ -68,24 +69,24 @@ export function Video(props: VideoProps) {
         <div className="flex gap-16 items-start">
           <div className="flex-1">
             <h1 className="text-2xl font-bold">
-              {data.lesson.title}
+              {data.music.title}
             </h1>
             <p className="text-gray-200 mt-4 leading-relaxed">
-              {data.lesson.description}
+              {data.music.description}
             </p>
 
             <div className="flex items-center gap-4 mt-6">
               <img 
                 className="h-16 w-16 rounded-full border-2 border-blue-500"
-                src={data.lesson.teacher.avatarURL}
+                src={data.music.artista.avatarUrl}
                 alt='' />
 
               <div className="leading-relaxed">
                 <strong className="font-bold text-2xl block">
-                  {data.lesson.teacher.name}
+                  {data.music.artista.name}
                 </strong>
                 <span className="text-sm text-gray-200 block">
-                  {data.lesson.teacher.bio}
+                  {data.music.artista.bio}
                 </span>
               </div>
             </div>
