@@ -1,31 +1,36 @@
-import { Lesson } from './Lesson';
+import { Musics } from './Musics';
 import { gql,useQuery } from "@apollo/client"
 
-interface GetLessonsQueryResponse {
-  lessons: {
+interface GetMusicsQueryResponse {
+  musics: {
     id: string;
     title: string;
-    availableAt: string;
     slug: string;
-    lessonType: 'live' | 'class';
+    avatarUrl: string;
+    name: string;
+    
   }[];
 
 }
 
-const GET_LESSONS_QUERY = gql`
-  query{
-    lessons(orderBy: availableAt_ASC, stage: PUBLISHED) {
+const GET_MUSICS_QUERY = gql`
+  query {
+    musics(stage: PUBLISHED){
       id
-      lessonType
-      availableAt
-      slug
       title
+      videoId
+      slug
+      description
+      artista {
+        avatarUrl
+        name
+      }
     }
   }
 `
 
 export function Sidebar(){
-  const {data} = useQuery<GetLessonsQueryResponse>(GET_LESSONS_QUERY)
+  const {data} = useQuery<GetMusicsQueryResponse>(GET_MUSICS_QUERY)
 
   return(
     <aside className="w-[348px] bg-gray-700 p-6 border-l border-gray-600"> 
@@ -35,13 +40,13 @@ export function Sidebar(){
       </span>
 
       <div className="flex flex-col gap-8">
-        {data?.lessons.map(lesson => {
+        {data?.musics.map(music => {
           return(
-            <Lesson key={lesson.id}
-              title={lesson.title}
-              slug={lesson.slug}
-              availableAt={new Date(lesson.availableAt)}
-              type={lesson.lessonType}
+            <Musics key={music.id}
+              title={music.title}
+              slug={music.slug}
+              name={music.name}
+              avatarUrl={music.avatarUrl}
             />
           )
           })
